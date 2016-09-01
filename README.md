@@ -324,7 +324,7 @@ $ ngrok http 5000
 
 This will expose your server (on the port 5000) publicly. To double check that this has worked, copy the address that will have appeared in your terminal window under 'forwarding' and navigate to it using your browser; it should look something like this. Make note of this as we'll need it again later!
 
-<p align="center"><img src ="https://raw.githubusercontent.com/Bucknalla/sigfox-python-flask/master/images/ngrok.png" width="400"></p>
+<p align="center"><img src ="https://raw.githubusercontent.com/Bucknalla/sigfox-python-flask/master/images/ngrok.png" width="500"></p>
 
 If that works for you, you're almost there! We just need to setup the SIGFOX Backend now.
 
@@ -332,19 +332,19 @@ If that works for you, you're almost there! We just need to setup the SIGFOX Bac
 
 Direct your browser to https://backend.sigfox.com. If you haven't yet activated your Akeru module, you will need to do this now. Navigate to https://backend.sigfox.com/activate and choose Snootlab as your Dev Kit provider. Next pick your country and respective provider. Find your Akeru's Device ID and PAC number as you'll need these for activation (you can find them on the box that the device came in!). You'll then be asked to enter some personal details and create an account. Do this and you should be registered on the SIGFOX Backend! Check the email account that you registered with and you should have a link inviting you to activate your account. The device you added should appear in your account!
 
-<p align="center"><img src ="https://raw.githubusercontent.com/Bucknalla/sigfox-python-flask/master/images/sigfox-activation.png" width="400"></p>
+<p align="center"><img src ="https://raw.githubusercontent.com/Bucknalla/sigfox-python-flask/master/images/sigfox-activation.png" width="600"></p>
 
 Once you've activated your device and have an account created, log in to the backend.sigfox.com and click on the device tab. Enter the ID of your device and filter for it. You should have a single result with the device type and ID visible.
 
-<p align="center"><img src ="https://raw.githubusercontent.com/Bucknalla/sigfox-python-flask/master/images/sigfox-home.png" width="400"></p>
+<p align="center"><img src ="https://raw.githubusercontent.com/Bucknalla/sigfox-python-flask/master/images/sigfox-home.png" width="600"></p>
 
 We need to setup the format that the SIGFOX Backend is expecting to receive from the Akeru device. Log into the Backend and click on the 'Device Type' tab. In the information panel, click 'edit' and a list of fields will appear. We want to set this up such that the server knows what to expect from the device. Go to 'Display Type' and select custom from the dropdown box. This lets us customise how to specify the data field. We'll set ours up to use a 'temp::int:8' which is a signed integer of 8 bits. This allows us to simulate negative temperatures if we wish as we'll be staying within temperature values that we could expect in the real world. Click the '?' if you want to find out what other data types the SIGFOX Backend can decode. Click 'OK' to confirm your selection. You will be returned to the 'Device Type' page.
 
-<p align="center"><img src ="https://raw.githubusercontent.com/Bucknalla/sigfox-python-flask/master/images/sigfox-callback.png" width="400"></p>
+<p align="center"><img src ="https://raw.githubusercontent.com/Bucknalla/sigfox-python-flask/master/images/sigfox-callback.png" width="600"></p>
 
 Now head to 'Callback' where we'll create a new callback for our SIGFOX device. Click 'New' in the top right corner and you'll be brought into a screen where you can setup a callback for the device. Click 'Custom callback'  and you'll be brought to a page where you'll be presented with a selection of different options to choose from. Choose the following options for your callback:
 
-<p align="center"><img src ="https://raw.githubusercontent.com/Bucknalla/sigfox-python-flask/master/images/sigfox-callback-details.png" width="400"></p>
+<p align="center"><img src ="https://raw.githubusercontent.com/Bucknalla/sigfox-python-flask/master/images/sigfox-callback-details.png" width="600"></p>
 
 **Type** - DATA - UPLINK
 **Channel** - URL
