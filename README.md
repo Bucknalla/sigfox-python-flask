@@ -380,4 +380,12 @@ Click 'OK' to confirm these details. That's it! Everything should be set up and 
 
 ### Further Learning/Exploration
 
+Finished this tutorial and want to extend its functionality? Here's a couple of different things you could try!
+
+* Add Server Authentication using ngrok and/or flask
+
+* Use AJAX to add new data points to the graph without reloading the webpage
+
+* Add additional SIGFOX enabled devices to send more data to the server!
+
 If you want to learn more about SIGFOX and how to get your devices connected to our network check out some of our other tutorials and documentation!
