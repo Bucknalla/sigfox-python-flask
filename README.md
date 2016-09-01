@@ -324,7 +324,9 @@ $ ngrok http 5000
 
 This will expose your server (on the port of 5000) publicly. To double check that this has worked, copy the address that will have appeared in your terminal window under 'forwarding' and navigate to it using your browser; it should look something like this.
 
-<p align="center"><img src ="http://makers.sigfox.com/img/sigfox-logo-black.svg" width="300"></p>
+
+
+<p align="center"><img src ="https://raw.githubusercontent.com/Bucknalla/sigfox-python-flask/blob/master/images/ngrok.png" width="300"></p>
 
 If that works for you, you're almost there! We just need to setup the SIGFOX Backend now.
 
