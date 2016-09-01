@@ -12,20 +12,20 @@ If you do not have these libraries/packages installed please follow the attached
 
 **Python 2.7**
 
-* Flask
+* [Flask](http://flask.pocoo.org/)
 
 **Javascript**
 
-* Chart JS
+* [Chart JS](http://www.chartjs.org/)
 
 **Arduino**
 
-* Snootlabs Akeru Arduino Board
-* Akeru (SIGFOX) Library
+* [Snootlabs Akeru Arduino Board](http://snootlab.com/lang-en/snootlab-shields/829-akeru-beta-33-en.html)
+* [Akeru (SIGFOX) Library](https://github.com/Snootlab/Akeru)
 
 **Ngrok**
 
-* Command line Tool
+* [Command line Tool](https://ngrok.com/)
 
 ### Getting Started
 
