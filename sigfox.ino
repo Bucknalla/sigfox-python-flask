@@ -19,7 +19,7 @@
 Akeru akeru(RX, TX);
 
 
-long randNumber;
+int8_t randNumber;
 
 void setup()
 {

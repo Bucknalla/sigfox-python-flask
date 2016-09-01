@@ -20,7 +20,7 @@ def add_message(sensor):
     print tempStore
     print time
     print content['device']
-    return jsonify({"sensor no.":sensor})
+    return ('', 200)
 
 @app.route('/graph')
 def show_graph():
