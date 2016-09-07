@@ -6,9 +6,9 @@ This tutorial briefly explains how to use SIGFOX's callback method to POST data 
 
 <p align="center"><img src ="https://raw.githubusercontent.com/Bucknalla/sigfox-python-flask/master/images/sigfox-graph.png" width="900"></p>
 
-<a align="center" href="https://heroku.com/deploy?template=https://github.com/bucknalla/sigfox-python-flask">
+<p align="center" href="https://heroku.com/deploy?template=https://github.com/bucknalla/sigfox-python-flask">
   <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
-</a>
+</p>
 
 ### Prerequisites
 
