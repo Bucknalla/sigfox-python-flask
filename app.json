@@ -1,0 +1,7 @@
+{
+  "name": "SIGFOX Python Flask Example",
+  "description": "An example of SIGFOX Callbacks using Python's Flask Package",
+  "repository": "https://github.com/bucknalla/sigfox-python-flask",
+  "logo": "http://makers.sigfox.com/favicon.ico",
+  "keywords": ["sigfox", "python", "flask"]
+}
