@@ -6,6 +6,10 @@ This tutorial briefly explains how to use SIGFOX's callback method to POST data 
 
 <p align="center"><img src ="https://raw.githubusercontent.com/Bucknalla/sigfox-python-flask/master/images/sigfox-graph.png" width="900"></p>
 
+<a align="center" href="https://heroku.com/deploy?template=https://github.com/bucknalla/sigfox-python-flask">
+  <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
+</a>
+
 ### Prerequisites
 
 If you do not have these libraries/packages installed please follow the attached links to install them. This tutorial assumes you have at least a novice level of understanding of Python, HTML/CSS/JS and Arduino.
