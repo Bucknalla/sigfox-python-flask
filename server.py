@@ -22,7 +22,7 @@ def add_message(sensor):
     print content['device']
     return ('', 200)
 
-@app.route('/graph')
+@app.route('/')
 def show_graph():
 
     return render_template('index.html', temps=tempStore, dates=dateStore)
