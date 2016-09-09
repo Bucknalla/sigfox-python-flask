@@ -12,7 +12,7 @@ app.config['BASIC_AUTH_PASSWORD'] = 'twitterbird2016'
 basic_auth = BasicAuth(app)
 
 
-client = MongoClient()
+client = MongoClient(os.environ.get(MONGODB_ADDON_URI))
 db = client.tempDatabase
 print 'Connected to Database...'
 collection = db.tempCollection
