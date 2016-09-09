@@ -12,7 +12,8 @@ app.config['BASIC_AUTH_PASSWORD'] = 'twitterbird2016'
 basic_auth = BasicAuth(app)
 
 
-client = MongoClient(os.environ.get(MONGODB_ADDON_URI))
+# client = MongoClient(os.environ.get(MONGODB_ADDON_URI))
+client = MongoClient("mongodb://ugpkibttfjqbtxy:7Wk6HqD8qyK57cBkvRty@bpf07cftaxmub0s-mongodb.services.clever-cloud.com:27017/bpf07cftaxmub0s")
 db = client.tempDatabase
 print 'Connected to Database...'
 collection = db.tempCollection
