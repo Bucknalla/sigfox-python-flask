@@ -2,15 +2,62 @@
 <html>
 
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Keeping your office healthy!">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Twitter Sigfox Bird</title>
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="images/android-desktop.png">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.blue-light_blue.min.css" />
+    <script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.bundle.min.js"></script>
 
+
+    <style>
+    .material-icons.md-18 { font-size: 18px; }
+    .material-icons.md-light { color: rgba(255, 255, 255, 1); }
+
+
+    </style>
 </head>
 
 <body>
-    <canvas id="myChart" width="400" height="180"></canvas>
+
+    <div class="mdl-layout__container has-scrolling-header"><div class="demo-layout mdl-layout mdl-layout--fixed-header mdl-js-layout mdl-color--grey-100 is-upgraded" data-upgraded=",MaterialLayout">
+      <header class="demo-header mdl-layout__header mdl-layout__header--scroll">
+        <div class="mdl-layout__header-row">
+          <span class="mdl-layout-title">SIGFOX Twitter Bird</span>
+          <div class="mdl-layout-spacer"></div>
+        </div>
+      </header>
+      <div class="demo-ribbon"></div>
+      <main class="demo-main mdl-layout__content">
+        <div class="demo-container mdl-grid">
+          <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone">
+
+          </div>
+          <canvas id="myChart" width="400" height="180"></canvas>
+
+        </div>
+        <footer class="mdl-mini-footer">
+          <div class="mdl-mini-footer--left-section">
+            <ul class="mdl-mini-footer--link-list">
+              <li><a href="#">To Twitter <i class="material-icons md-18 md-light">favorite</i> from SIGFOX</a></li>
+            </ul>
+          </div>
+        </footer>
+      </main>
+    </div></div>
     <script>
         var temps = {{temps | safe}};
-        var dates = {{dates | safe}};
+        var hums = {{hums | safe}};
+        var airs = {{airs | safe}};
+        var bats = {{bats | safe}};
+        var dates = {{dates | tojson}};
 
         var ctx = document.getElementById("myChart");
         var myChart = new Chart(ctx, {
@@ -18,16 +65,54 @@
             data: {
                 labels: dates,
                 datasets: [{
-                    label: 'SIGFOX Temperature',
+                    label: 'Temperature',
                     data: temps,
-                    backgroundColor: [
-                        'rgba(75, 192, 192, 0.2)',
-                    ],
+                    // backgroundColor: [
+                    //     'rgba(75, 192, 192, 0.2)',
+                    // ],
+                    fill: false,
                     borderColor: [
                         'rgba(75, 192, 192, 1)',
                     ],
                     borderWidth: 1
-                }]
+                },
+                {
+                    label: 'Humidity',
+                    data: hums,
+                    // backgroundColor: [
+                    //     'rgba(75, 0, 192, 0.2)',
+                    // ],
+                    fill: false,
+                    borderColor: [
+                        'rgba(75, 0, 192, 1)',
+                    ],
+                    borderWidth: 1
+                },
+                {
+                    label: 'Battery',
+                    data: bats,
+                    // backgroundColor: [
+                    //     'rgba(256, 192, 192, 0.2)',
+                    // ],
+                    fill: false,
+                    borderColor: [
+                        'rgba(256, 192, 192, 1)',
+                    ],
+                    borderWidth: 1
+                },
+                {
+                    label: 'Air Quality',
+                    data: airs,
+                    // backgroundColor: [
+                    //     'rgba(75, 192, 0, 0.2)',
+                    // ],
+                    fill: false,
+                    borderColor: [
+                        'rgba(75, 192, 0, 1)',
+                    ],
+                    borderWidth: 1
+                }
+                ]
             },
             options: {
                 scales: {
