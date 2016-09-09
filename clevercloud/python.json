@@ -1,0 +1,9 @@
+{
+    "build": {
+        "folder": "app"
+    },
+    "deploy": {
+        "module": "server:app",
+        "static": "/clevercloud/static/"
+    }
+}
