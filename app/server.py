@@ -16,12 +16,6 @@ db = client.bkkui1juebikood
 print 'Connected to Database...'
 collection = db.tempCollection
 data = db.data
-# client = MongoClient()
-# db = client.tempDatabase
-# print 'Connected to Database...'
-# print db
-# collection = db['tempCollection']
-# print 'Connected to Collection...'
 
 @app.route('/data', methods=['POST'])
 @basic_auth.required
@@ -46,7 +40,7 @@ def update_webpage():
 @app.route('/', methods=['GET'])
 def load_data():
 
-    mydataset = list(db.data.find().sort("_id",-1).limit(10))
+    mydataset = list(db.data.find().sort("_id",1).limit(10))
 
     temperature = []
     humidity = []
@@ -62,6 +56,7 @@ def load_data():
         airquality.append(mydata['air'])
         timeStore.append(mydata['time'])
 
+    # return jsonify(bats=battery,hums=humidity,temps=temperature,airs=airquality,dates=timeStore)
     return render_template("index.html",bats=battery,hums=humidity,temps=temperature,airs=airquality,dates=timeStore)
 
 if __name__ == '__main__':

@@ -13,45 +13,126 @@
     <link rel="icon" sizes="192x192" href="images/android-desktop.png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.blue-light_blue.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
     <script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.bundle.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.2/Chart.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> -->
 
     <style>
-    .material-icons.md-18 { font-size: 18px; }
-    .material-icons.md-light { color: rgba(255, 255, 255, 1); }
+        .material-icons.md-18 {
+            font-size: 18px;
+        }
 
+        .material-icons.md-light {
+            color: rgba(255, 255, 255, 1);
+        }
 
+        .sigfoxstyle {
+            font-family: 'Ubuntu', sans-serif;
+        }
+
+        .footer-signature {
+            text-align: center;
+            font-size: 20px;
+            margin: 20px 0;
+        }
+
+        .footer-signature img {
+            height: 30px;
+            margin: 0 5px;
+        }
+
+        #chartjs-tooltip {
+            opacity: 50;
+            position: absolute;
+            background: rgba(5, 152, 130, 0.7);
+            color: white;
+            padding: 3px;
+            border-radius: 3px;
+            -webkit-transition: all .1s ease;
+            transition: all .1s ease;
+            pointer-events: none;
+            -webkit-transform: translate(-50%, 0);
+            transform: translate(-50%, 0);
+        }
+
+        .canvas-container {
+            width: 100% !important;
+            height: auto !important;
+        }
     </style>
 </head>
 
 <body>
-
-    <div class="mdl-layout__container has-scrolling-header"><div class="demo-layout mdl-layout mdl-layout--fixed-header mdl-js-layout mdl-color--grey-100 is-upgraded" data-upgraded=",MaterialLayout">
-      <header class="demo-header mdl-layout__header mdl-layout__header--scroll">
-        <div class="mdl-layout__header-row">
-          <span class="mdl-layout-title">SIGFOX Twitter Bird</span>
-          <div class="mdl-layout-spacer"></div>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <header class="mdl-layout__header mdl-layout__header--waterfall">
+            <div class="mdl-layout__drawer-button"><i class="material-icons">menu</i></div>
+            <div class="mdl-layout__header-row">
+                <span class="mdl-layout-title sigfoxstyle">SIGFOX Twitter Bird</span>
+                <div class="mdl-layout-spacer"></div>
+            </div>
+        </header>
+        <div class="mdl-layout__drawer">
+            <span class="mdl-layout-title sigfoxstyle">Menu</span>
+            <nav class="mdl-navigation">
+                <a class="mdl-navigation__link sigfoxstyle" href="">Home</a>
+                <a id="show-about" class="mdl-navigation__link sigfoxstyle" href="">About</a>
+            </nav>
         </div>
-      </header>
-      <div class="demo-ribbon"></div>
-      <main class="demo-main mdl-layout__content">
-        <div class="demo-container mdl-grid">
-          <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone">
+        <main class="mdl-layout__content">
 
-          </div>
-          <canvas id="myChart" width="400" height="180"></canvas>
+            <dialog class="mdl-dialog">
+                <h4 class="mdl-dialog__title">Allow data collection?</h4>
+                <div class="mdl-dialog__content">
+                    <p>
+                        Allowing us to collect data will let us get you the information you want faster.
+                    </p>
+                </div>
+                <div class="mdl-dialog__actions">
+                    <button type="button" class="mdl-button">Agree</button>
+                    <button type="button" class="mdl-button close">Disagree</button>
+                </div>
+            </dialog>
 
-        </div>
-        <footer class="mdl-mini-footer">
-          <div class="mdl-mini-footer--left-section">
-            <ul class="mdl-mini-footer--link-list">
-              <li><a href="#">To Twitter <i class="material-icons md-18 md-light">favorite</i> from SIGFOX</a></li>
-            </ul>
-          </div>
-        </footer>
-      </main>
-    </div></div>
+            <script>
+                var dialog = document.querySelector('dialog');
+                var showDialogButton = document.querySelector('#show-about');
+                if (!dialog.showModal) {
+                    dialogPolyfill.registerDialog(dialog);
+                }
+                showDialogButton.addEventListener('click', function() {
+                    dialog.showModal();
+                });
+                dialog.querySelector('.close').addEventListener('click', function() {
+                    dialog.close();
+                });
+            </script>
+
+            <div class="mdl-grid">
+                <div class="mdl-cell mdl-cell--6-col mdl-cell--8-tablet mdl-cell--4-phone">
+                    <canvas class="canvas-container" height="200" id="tempChart"></canvas>
+                </div>
+                <div class="mdl-cell mdl-cell--6-col mdl-cell--8-tablet mdl-cell--4-phone">
+                    <canvas class="canvas-container" height="200" id="humChart"></canvas>
+                </div>
+            </div>
+
+            <div class="mdl-grid">
+                <div class="mdl-cell mdl-cell--6-col mdl-cell--8-tablet mdl-cell--4-phone">
+                    <canvas class="canvas-container" height="200" id="airChart"></canvas>
+                </div>
+                <div class="mdl-cell mdl-cell--6-col mdl-cell--8-tablet mdl-cell--4-phone">
+                    <canvas class="canvas-container" height="200" id="batChart"></canvas>
+                </div>
+            </div>
+
+            <footer class="mdl-mini-footer" style="background-color:#F5F5F5">
+                <div class="mdl-mini-footer--middle-section" style="width:800px; margin:0 auto;">
+                    <div class="footer-signature sigfoxstyle">Made for <img src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9f/Twitter_bird_logo_2012.svg/1259px-Twitter_bird_logo_2012.svg.png"> with <img alt="heart" style="-webkit-filter: grayscale(30%);" src="https://upload.wikimedia.org/wikipedia/commons/4/42/Love_Heart_SVG.svg">                        from <img alt="sigfox" title="sigfox" src="http://makers.sigfox.com/img/tour/butterfly@3x.png"></div>
+                </div>
+            </footer>
+        </main>
+    </div>
     <script>
         var temps = {{temps | safe}};
         var hums = {{hums | safe}};
@@ -59,67 +140,134 @@
         var bats = {{bats | safe}};
         var dates = {{dates | tojson}};
 
-        var ctx = document.getElementById("myChart");
-        var myChart = new Chart(ctx, {
+        var ctx1 = document.getElementById("tempChart").getContext("2d");
+        var tempChart = new Chart(ctx1, {
             type: 'line',
             data: {
                 labels: dates,
                 datasets: [{
-                    label: 'Temperature',
+                    label: 'Temperature (℃)',
                     data: temps,
-                    // backgroundColor: [
-                    //     'rgba(75, 192, 192, 0.2)',
-                    // ],
-                    fill: false,
-                    borderColor: [
-                        'rgba(75, 192, 192, 1)',
-                    ],
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    fill: true,
+                    borderColor: 'rgba(75, 192, 192, 1)',
                     borderWidth: 1
-                },
-                {
-                    label: 'Humidity',
-                    data: hums,
-                    // backgroundColor: [
-                    //     'rgba(75, 0, 192, 0.2)',
-                    // ],
-                    fill: false,
-                    borderColor: [
-                        'rgba(75, 0, 192, 1)',
-                    ],
-                    borderWidth: 1
-                },
-                {
-                    label: 'Battery',
-                    data: bats,
-                    // backgroundColor: [
-                    //     'rgba(256, 192, 192, 0.2)',
-                    // ],
-                    fill: false,
-                    borderColor: [
-                        'rgba(256, 192, 192, 1)',
-                    ],
-                    borderWidth: 1
-                },
-                {
-                    label: 'Air Quality',
-                    data: airs,
-                    // backgroundColor: [
-                    //     'rgba(75, 192, 0, 0.2)',
-                    // ],
-                    fill: false,
-                    borderColor: [
-                        'rgba(75, 192, 0, 1)',
-                    ],
-                    borderWidth: 1
-                }
-                ]
+                }]
             },
             options: {
+                responsive: true,
+                hover: {
+                    mode: 'single'
+                },
                 scales: {
                     yAxes: [{
                         ticks: {
-                            beginAtZero: true
+                            beginAtZero: false
                         }
+                    }],
+                    xAxes: [{
+                        display: false
+                    }]
+                },
+            }
+        });
+
+        var ctx2 = document.getElementById("humChart").getContext("2d");
+        var humChart = new Chart(ctx2, {
+            type: 'line',
+            data: {
+                labels: dates,
+                datasets: [{
+                    label: 'Humidity (%)',
+                    data: hums,
+                    backgroundColor: 'rgba(75, 192, 0, 0.2)',
+                    fill: true,
+                    borderColor: 'rgba(75, 192, 0, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                hover: {
+                    mode: 'single'
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            max: 100,
+                            min: 0
+                        }
+                    }],
+                    xAxes: [{
+                        display: false
+                    }]
+                }
+            }
+        });
+
+        var ctx3 = document.getElementById("airChart").getContext("2d");
+        var airChart = new Chart(ctx3, {
+            type: 'line',
+            data: {
+                labels: dates,
+                datasets: [{
+                    label: 'Air Quality (CO₂ ppm)',
+                    data: airs,
+                    backgroundColor: 'rgba(75, 0, 192, 0.2)',
+                    fill: true,
+                    borderColor: 'rgba(75, 0, 192, 1)',
+                    borderWidth: 1
+                }],
+            },
+            options: {
+                responsive: true,
+                hover: {
+                    mode: 'single'
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            min: 0
+                        }
+                    }],
+                    xAxes: [{
+                        display: false
+                    }]
+                }
+            }
+        });
+
+        var ctx4 = document.getElementById("batChart").getContext("2d");
+        var batChart = new Chart(ctx4, {
+            type: 'line',
+            data: {
+                labels: dates,
+                datasets: [{
+                    label: 'Battery (%)',
+                    data: bats,
+                    backgroundColor: 'rgba(256, 192, 192, 0.2)',
+                    fill: true,
+                    borderColor: 'rgba(256, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                hover: {
+                    mode: 'single'
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            max: 100,
+                            min: 0,
+                        }
+                    }],
+                    xAxes: [{
+                        display: false
                     }]
                 }
             }
