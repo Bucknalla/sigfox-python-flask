@@ -117,14 +117,14 @@
                 </div>
             </div>
 
-            <div class="mdl-grid">
+            <!-- <div class="mdl-grid">
                 <div class="mdl-cell mdl-cell--6-col mdl-cell--8-tablet mdl-cell--4-phone">
                     <canvas class="canvas-container" height="200" id="airChart"></canvas>
                 </div>
                 <div class="mdl-cell mdl-cell--6-col mdl-cell--8-tablet mdl-cell--4-phone">
                     <canvas class="canvas-container" height="200" id="batChart"></canvas>
                 </div>
-            </div>
+            </div> -->
 
             <footer class="mdl-mini-footer" style="background-color:#F5F5F5">
                 <div class="mdl-mini-footer--middle-section" style="width:800px; margin:0 auto;">
@@ -135,9 +135,9 @@
     </div>
     <script>
         var temps = {{temps | safe}};
-        var hums = {{hums | safe}};
-        var airs = {{airs | safe}};
-        var bats = {{bats | safe}};
+        var hums = {{hum | safe}};
+        // var airs = {{airs | safe}};
+        // var bats = {{bats | safe}};
         var dates = {{dates | tojson}};
 
         var ctx1 = document.getElementById("tempChart").getContext("2d");
@@ -205,73 +205,73 @@
                 }
             }
         });
-
-        var ctx3 = document.getElementById("airChart").getContext("2d");
-        var airChart = new Chart(ctx3, {
-            type: 'line',
-            data: {
-                labels: dates,
-                datasets: [{
-                    label: 'Air Quality (CO₂ ppm)',
-                    data: airs,
-                    backgroundColor: 'rgba(75, 0, 192, 0.2)',
-                    fill: true,
-                    borderColor: 'rgba(75, 0, 192, 1)',
-                    borderWidth: 1
-                }],
-            },
-            options: {
-                responsive: true,
-                hover: {
-                    mode: 'single'
-                },
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true,
-                            min: 0
-                        }
-                    }],
-                    xAxes: [{
-                        display: false
-                    }]
-                }
-            }
-        });
-
-        var ctx4 = document.getElementById("batChart").getContext("2d");
-        var batChart = new Chart(ctx4, {
-            type: 'line',
-            data: {
-                labels: dates,
-                datasets: [{
-                    label: 'Battery (%)',
-                    data: bats,
-                    backgroundColor: 'rgba(256, 192, 192, 0.2)',
-                    fill: true,
-                    borderColor: 'rgba(256, 192, 192, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                hover: {
-                    mode: 'single'
-                },
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true,
-                            max: 100,
-                            min: 0,
-                        }
-                    }],
-                    xAxes: [{
-                        display: false
-                    }]
-                }
-            }
-        });
+        //
+        // var ctx3 = document.getElementById("airChart").getContext("2d");
+        // var airChart = new Chart(ctx3, {
+        //     type: 'line',
+        //     data: {
+        //         labels: dates,
+        //         datasets: [{
+        //             label: 'Air Quality (CO₂ ppm)',
+        //             data: airs,
+        //             backgroundColor: 'rgba(75, 0, 192, 0.2)',
+        //             fill: true,
+        //             borderColor: 'rgba(75, 0, 192, 1)',
+        //             borderWidth: 1
+        //         }],
+        //     },
+        //     options: {
+        //         responsive: true,
+        //         hover: {
+        //             mode: 'single'
+        //         },
+        //         scales: {
+        //             yAxes: [{
+        //                 ticks: {
+        //                     beginAtZero: true,
+        //                     min: 0
+        //                 }
+        //             }],
+        //             xAxes: [{
+        //                 display: false
+        //             }]
+        //         }
+        //     }
+        // });
+        //
+        // var ctx4 = document.getElementById("batChart").getContext("2d");
+        // var batChart = new Chart(ctx4, {
+        //     type: 'line',
+        //     data: {
+        //         labels: dates,
+        //         datasets: [{
+        //             label: 'Battery (%)',
+        //             data: bats,
+        //             backgroundColor: 'rgba(256, 192, 192, 0.2)',
+        //             fill: true,
+        //             borderColor: 'rgba(256, 192, 192, 1)',
+        //             borderWidth: 1
+        //         }]
+        //     },
+        //     options: {
+        //         responsive: true,
+        //         hover: {
+        //             mode: 'single'
+        //         },
+        //         scales: {
+        //             yAxes: [{
+        //                 ticks: {
+        //                     beginAtZero: true,
+        //                     max: 100,
+        //                     min: 0,
+        //                 }
+        //             }],
+        //             xAxes: [{
+        //                 display: false
+        //             }]
+        //         }
+        //     }
+        // });
     </script>
 </body>
 
