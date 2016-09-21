@@ -87,6 +87,7 @@ def load_data():
         humidity.append(float(mydata['humidity']))
         temperature.append(float(mydata['temp']))
         dates.append(mydata['date'])
+        
 
     # return jsonify(bats=battery,hums=humidity,temps=temperature,airs=airquality,dates=timeStore)
     # return render_template("index.html",bats=battery,hums=humidity,temps=temperature,airs=airquality,dates=timeStore)
