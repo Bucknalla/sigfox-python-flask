@@ -59,10 +59,10 @@ def update_webpage():
     # device = content['device']
     datePayload = content['time']
     deviceIdPayload = content['deviceId']
-    tempPayload = content['data']['temp']
-    humPayload = content['data']['hum']
-    battPayload = content['data']['batt']
-    modePayload = content['data']['mode']
+    tempPayload = int(content['data']['temp'])
+    humPayload = int(content['data']['hum'])
+    battPayload = int(content['data']['batt'])
+    modePayload = int(content['data']['mode'])
 
     batt = decodeBattery(modePayload,battPayload)
     temp = decodeTemperature(battPayload,tempPayload)
@@ -123,16 +123,16 @@ def decodeHumidity(byte4):
     humidity = byte4 * 0.5
     return humidity
 
-# def decodeMode(byte1):
-#     byte1 = BitArray(uint=byte1, length=8)
-#     mode = byte1[5:]
-#     timeframe = byte1[3:5]
-#     typeAction = byte1[1:4]
-#     print mode
-#     print timeframe
-#     print typeAction
-#     modeList = [mode.uint,timeframe.uint,typeAction.uint]
-#     return modeList
+def decodeMode(byte1):
+    byte1 = BitArray(uint=byte1, length=8)
+    mode = byte1[5:]
+    timeframe = byte1[3:5]
+    typeAction = byte1[1:4]
+    print mode
+    print timeframe
+    print typeAction
+    modeList = [mode.uint,timeframe.uint,typeAction.uint]
+    return modeList
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
