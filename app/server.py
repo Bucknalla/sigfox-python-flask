@@ -67,7 +67,7 @@ def update_webpage():
     batt = decodeBattery(modePayload,battPayload)
     temp = decodeTemperature(battPayload,tempPayload)
     hum = decodeHumidity(humPayload)
-    # mode = decodeMode(modePayload)
+    mode = decodeMode(modePayload)
 
     # time = int(content['time'])
     payload = {'mode': mode, 'temperature': round(temp,2), 'humidity' : hum, 'battery' : round(batt,2), 'date' : datePayload, 'deviceId' : deviceIdPayload}
