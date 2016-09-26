@@ -123,6 +123,14 @@
                 </div>
             </div>
 
+            <div class="mdl-grid">
+                <div class="mdl-cell mdl-cell--8-col mdl-cell--2-offset mdl-cell--8-tablet mdl-cell--4-phone">
+                    <p class="sigfoxstyle">
+                        At Sigfox we use Twitter all the time to connect, interact and engage with our fans. We absolutely love how easy Twitter has made it to build relationships and communities so we wanted to say thank you! This webapp is connected to the twitter bird that we sent you, feeding back data bout the temperature and humidity from its surroundings. We hope you find a place for him!
+                    </p>
+                </div>
+            </div>
+
             <footer class="mdl-mini-footer" style="background-color:#F5F5F5">
                 <div class="mdl-mini-footer--middle-section" style="width:800px; margin:0 auto;">
                     <div class="footer-signature sigfoxstyle">Made for <img src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9f/Twitter_bird_logo_2012.svg/1259px-Twitter_bird_logo_2012.svg.png"> with <img alt="heart" style="-webkit-filter: grayscale(30%);" src="https://upload.wikimedia.org/wikipedia/commons/4/42/Love_Heart_SVG.svg"> from <img alt="sigfox" title="sigfox" src="http://makers.sigfox.com/img/tour/butterfly@3x.png"></div>
@@ -158,7 +166,9 @@
                 scales: {
                     yAxes: [{
                         ticks: {
-                            beginAtZero: false
+                            beginAtZero: false,
+                            max: 100,
+                            min: -25
                         }
                     }],
                     xAxes: [{
