@@ -115,7 +115,8 @@ def decodeBattery(byte1,byte2):
 def decodeTemperature(byte2,byte3):
     byte2 = BitArray(uint=byte2, length=8)
     byte3 = BitArray(uint=byte3, length=8)
-    temp = byte2[0:5] + byte3[2:]
+    temp = byte2[0:4] + byte3[2:]
+    print temp
     temperature = (temp.uint - 200) / 8
     return temperature
 
