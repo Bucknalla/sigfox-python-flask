@@ -21,6 +21,7 @@ class User(flask_login.UserMixin):
     # proxy for a database of users
     user_database = {os.getenv("TWITTER_USER"): (os.getenv("TWITTER_USER"), os.getenv("TWITTER_PASS"))}
 
+
     def __init__(self, username, password):
         self.id = username
         self.password = password
@@ -48,6 +49,7 @@ def load_user(request):
 def unauthorized_handler():
     return 'Unauthorized', 401
 
+
 @app.route('/data', methods=['POST'])
 @flask_login.login_required
 def update_webpage():
@@ -65,7 +67,7 @@ def update_webpage():
     batt = decodeBattery(modePayload,battPayload)
     temp = decodeTemperature(battPayload,tempPayload)
     hum = decodeHumidity(humPayload)
-    mode = decodeMode(modePayload)
+    # mode = decodeMode(modePayload)
 
     # time = int(content['time'])
     payload = {'mode': mode, 'temperature': round(temp,2), 'humidity' : hum, 'battery' : round(batt,2), 'date' : datePayload, 'deviceId' : deviceIdPayload}
@@ -121,16 +123,16 @@ def decodeHumidity(byte4):
     humidity = byte4 * 0.5
     return humidity
 
-def decodeMode(byte1):
-    byte1 = BitArray(uint=byte1, length=8)
-    mode = byte1[5:]
-    timeframe = byte1[3:5]
-    typeAction = byte1[1:4]
-    print mode
-    print timeframe
-    print typeAction
-    modeList = [mode.uint,timeframe.uint,typeAction.uint]
-    return modeList
+# def decodeMode(byte1):
+#     byte1 = BitArray(uint=byte1, length=8)
+#     mode = byte1[5:]
+#     timeframe = byte1[3:5]
+#     typeAction = byte1[1:4]
+#     print mode
+#     print timeframe
+#     print typeAction
+#     modeList = [mode.uint,timeframe.uint,typeAction.uint]
+#     return modeList
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
