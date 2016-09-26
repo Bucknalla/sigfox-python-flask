@@ -113,7 +113,12 @@ def decodeBattery(byte1,byte2):
     byte2 = BitArray(uint=byte2, length=8)
     batt = byte1[0:1] + byte2[4:]
     battery = batt.uint * 0.05 * 2.7
-    return battery
+
+    voltRange = (4.25 - 2.7)
+    perRange = (100 - 0)
+    newBattery = (((battery - 2.7) * perRange) / voltRange) + 0
+    
+    return newBattery
 
 def decodeTemperature(byte2,byte3):
     byte2 = BitArray(uint=byte2, length=8)
