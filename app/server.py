@@ -57,12 +57,14 @@ def update_webpage():
     print flask_login.current_user.id
     content = request.json
     # device = content['device']
-    datePayload = content['time']
+    datePayload = int(content['time'])
     deviceIdPayload = content['deviceId']
     tempPayload = int(content['data']['temp'])
     humPayload = int(content['data']['hum'])
     battPayload = int(content['data']['batt'])
     modePayload = int(content['data']['mode'])
+
+    datePayload = datetime.datetime.fromtimestamp(datePayload).strftime('%Y-%m-%d %H:%M:%S')
 
     batt = decodeBattery(modePayload,battPayload)
     temp = decodeTemperature(battPayload,tempPayload)
