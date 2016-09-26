@@ -108,14 +108,14 @@ def load_data():
 def decodeBattery(byte1,byte2):
     byte1 = BitArray(uint=byte1, length=8)
     byte2 = BitArray(uint=byte2, length=8)
-    batt = byte1[0:1] + byte2[0:4]
+    batt = byte1[0:1] + byte2[4:]
     battery = batt.uint * 0.05 * 2.7
     return battery
 
 def decodeTemperature(byte2,byte3):
     byte2 = BitArray(uint=byte2, length=8)
     byte3 = BitArray(uint=byte3, length=8)
-    temp = byte2[4:] + byte3[2:]
+    temp = byte2[0:5] + byte3[2:]
     temperature = (temp.uint - 200) / 8
     return temperature
 
