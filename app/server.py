@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, render_template
 import flask_login
 from pymongo import MongoClient
 from basicauth import decode
+from bitstring import BitArray, BitStream
 import os
 import json
 
@@ -47,7 +48,6 @@ def load_user(request):
 def unauthorized_handler():
     return 'Unauthorized', 401
 
-
 @app.route('/data', methods=['POST'])
 @flask_login.login_required
 def update_webpage():
@@ -55,12 +55,22 @@ def update_webpage():
     print flask_login.current_user.id
     content = request.json
     # device = content['device']
-    date = content['values'][0]['date']
-    temp = content['values'][0]['value']
-    hum = content['values'][1]['value']
+    datePayload = content['time']
+    deviceIdPayload = content['deviceId']
+    tempPayload = content['data']['temp']
+    humPayload = content['data']['hum']
+    battPayload = content['data']['batt']
+    modePayload = content['data']['mode']
+
+    batt = decodeBattery(modePayload,battPayload)
+    temp = decodeTemperature(battPayload,tempPayload)
+    hum = decodeHumidity(humPayload)
+    mode = decodeMode(modePayload)
 
     # time = int(content['time'])
-    payload = {'date': date, 'temp': temp, 'humidity' : hum}
+    payload = {'mode': mode, 'temperature': round(temp,2), 'humidity' : hum, 'battery' : round(batt,2), 'date' : datePayload, 'deviceId' : deviceIdPayload}
+
+    print payload
     # content['time'] = datetime.datetime.fromtimestamp(time).strftime('%Y-%m-%d %H:%M:%S')
     try:
         data_id = data.insert_one(payload).inserted_id
@@ -68,8 +78,6 @@ def update_webpage():
         print 'Error loading data into collection'
         return('', 400)
 
-    print date
-    print temp
     return('', 200)
 
 
@@ -80,19 +88,49 @@ def load_data():
 
     temperature = []
     humidity = []
+    battery = []
     dates = []
 
     for mydata in mydataset:
 
         humidity.append(float(mydata['humidity']))
-        temperature.append(float(mydata['temp']))
+        temperature.append(float(mydata['temperature']))
+        battery.append(mydata['battery'])
         dates.append(mydata['date'])
-        
+
 
     # return jsonify(bats=battery,hums=humidity,temps=temperature,airs=airquality,dates=timeStore)
     # return render_template("index.html",bats=battery,hums=humidity,temps=temperature,airs=airquality,dates=timeStore)
-    return render_template("index.html",hum=humidity,temps=temperature,dates=dates)
+    return render_template("index.html",hum=humidity,temps=temperature,dates=dates, batts=battery)
 
+def decodeBattery(byte1,byte2):
+    byte1 = BitArray(uint=byte1, length=8)
+    byte2 = BitArray(uint=byte2, length=8)
+    batt = byte1[0:1] + byte2[0:4]
+    battery = batt.uint * 0.05 * 2.7
+    return battery
+
+def decodeTemperature(byte2,byte3):
+    byte2 = BitArray(uint=byte2, length=8)
+    byte3 = BitArray(uint=byte3, length=8)
+    temp = byte2[4:] + byte3[2:]
+    temperature = (temp.uint - 200) / 8
+    return temperature
+
+def decodeHumidity(byte4):
+    humidity = byte4 * 0.5
+    return humidity
+
+def decodeMode(byte1):
+    byte1 = BitArray(uint=byte1, length=8)
+    mode = byte1[5:]
+    timeframe = byte1[3:5]
+    typeAction = byte1[1:4]
+    print mode
+    print timeframe
+    print typeAction
+    modeList = [mode.uint,timeframe.uint,typeAction.uint]
+    return modeList
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
