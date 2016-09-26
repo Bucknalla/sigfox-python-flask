@@ -76,35 +76,35 @@
             <span class="mdl-layout-title sigfoxstyle">Menu</span>
             <nav class="mdl-navigation">
                 <a class="mdl-navigation__link sigfoxstyle" href="">Home</a>
-                <a id="show-about" class="mdl-navigation__link sigfoxstyle" href="">About</a>
+                <a id="show-dialog" type="button" class="mdl-navigation__link sigfoxstyle" style="background: ">About</a>
             </nav>
         </div>
         <main class="mdl-layout__content">
 
             <dialog class="mdl-dialog">
-                <h4 class="mdl-dialog__title">Allow data collection?</h4>
-                <div class="mdl-dialog__content">
+                <h4 class="mdl-dialog__title" style="text-align:center">Thanks!</h4>
+                <div class="mdl-dialog__content sigfoxstyle" style="text-align:center">
                     <p>
-                        Allowing us to collect data will let us get you the information you want faster.
+                        This tool was built by the Developer Evangelists at Sigfox as a thank you to the team at Twitter!
                     </p>
+                    <img alt="heart" style="-webkit-filter: grayscale(30%);" width="70px" src="https://upload.wikimedia.org/wikipedia/commons/4/42/Love_Heart_SVG.svg">
                 </div>
-                <div class="mdl-dialog__actions">
-                    <button type="button" class="mdl-button">Agree</button>
-                    <button type="button" class="mdl-button close">Disagree</button>
+                <div class="mdl-dialog__actions sigfoxstyle">
+                    <button type="button" class="mdl-button close">Close</button>
                 </div>
             </dialog>
 
             <script>
                 var dialog = document.querySelector('dialog');
-                var showDialogButton = document.querySelector('#show-about');
-                if (!dialog.showModal) {
-                    dialogPolyfill.registerDialog(dialog);
+                var showDialogButton = document.querySelector('#show-dialog');
+                if (! dialog.showModal) {
+                  dialogPolyfill.registerDialog(dialog);
                 }
                 showDialogButton.addEventListener('click', function() {
-                    dialog.showModal();
+                  dialog.showModal();
                 });
                 dialog.querySelector('.close').addEventListener('click', function() {
-                    dialog.close();
+                  dialog.close();
                 });
             </script>
 
@@ -125,7 +125,7 @@
 
             <footer class="mdl-mini-footer" style="background-color:#F5F5F5">
                 <div class="mdl-mini-footer--middle-section" style="width:800px; margin:0 auto;">
-                    <div class="footer-signature sigfoxstyle">Made for <img src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9f/Twitter_bird_logo_2012.svg/1259px-Twitter_bird_logo_2012.svg.png"> with <img alt="heart" style="-webkit-filter: grayscale(30%);" src="https://upload.wikimedia.org/wikipedia/commons/4/42/Love_Heart_SVG.svg">                        from <img alt="sigfox" title="sigfox" src="http://makers.sigfox.com/img/tour/butterfly@3x.png"></div>
+                    <div class="footer-signature sigfoxstyle">Made for <img src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9f/Twitter_bird_logo_2012.svg/1259px-Twitter_bird_logo_2012.svg.png"> with <img alt="heart" style="-webkit-filter: grayscale(30%);" src="https://upload.wikimedia.org/wikipedia/commons/4/42/Love_Heart_SVG.svg"> from <img alt="sigfox" title="sigfox" src="http://makers.sigfox.com/img/tour/butterfly@3x.png"></div>
                 </div>
             </footer>
         </main>
