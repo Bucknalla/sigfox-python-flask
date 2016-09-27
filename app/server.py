@@ -18,18 +18,20 @@ db = client.bkkui1juebikood
 print 'Connected to Database...'
 data = db.data
 
+
 class User(flask_login.UserMixin):
     # proxy for a database of users
-    user_database = {os.getenv("TWITTER_USER"): (os.getenv("TWITTER_USER"), os.getenv("TWITTER_PASS"))}
-
+    user_database = {os.getenv("TWITTER_USER"): (
+        os.getenv("TWITTER_USER"), os.getenv("TWITTER_PASS"))}
 
     def __init__(self, username, password):
         self.id = username
         self.password = password
 
     @classmethod
-    def get(cls,id):
+    def get(cls, id):
         return cls.user_database.get(id)
+
 
 @login_manager.request_loader
 def load_user(request):
@@ -41,14 +43,16 @@ def load_user(request):
         username, password = decode(token)
         user_entry = User.get(username)
         if (user_entry is not None):
-            user = User(user_entry[0],user_entry[1])
+            user = User(user_entry[0], user_entry[1])
             if (user.password == password):
                 return user
     return None
 
+
 @login_manager.unauthorized_handler
 def unauthorized_handler():
     return 'Unauthorized', 401
+
 
 @app.route('/data', methods=['POST'])
 @flask_login.login_required
@@ -66,15 +70,17 @@ def update_webpage():
 
     datePayload = correctTimeZone(datePayload)
 
-    datePayload = datetime.datetime.fromtimestamp(datePayload).strftime('%Y-%m-%d %H:%M:%S')
+    datePayload = datetime.datetime.fromtimestamp(
+        datePayload).strftime('%Y-%m-%d %H:%M:%S')
 
-    batt = decodeBattery(modePayload,battPayload)
-    temp = decodeTemperature(battPayload,tempPayload)
+    batt = decodeBattery(modePayload, battPayload)
+    temp = decodeTemperature(battPayload, tempPayload)
     hum = decodeHumidity(humPayload)
     mode = decodeMode(modePayload)
 
     # time = int(content['time'])
-    payload = {'mode': mode, 'temperature': round(temp,2), 'humidity' : hum, 'battery' : round(batt,2), 'date' : datePayload, 'deviceId' : deviceIdPayload}
+    payload = {'mode': mode, 'temperature': round(temp, 2), 'humidity': hum, 'battery': round(
+        batt, 2), 'date': datePayload, 'deviceId': deviceIdPayload}
 
     print payload
     # content['time'] = datetime.datetime.fromtimestamp(time).strftime('%Y-%m-%d %H:%M:%S')
@@ -90,7 +96,7 @@ def update_webpage():
 @app.route('/', methods=['GET'])
 def load_data():
 
-    mydataset = list(db.data.find().sort("date",-1).limit(14))
+    mydataset = list(db.data.find().sort("date", -1).limit(14))
     mydataset.reverse()
 
     temperature = []
@@ -105,12 +111,13 @@ def load_data():
         battery.append(mydata['battery'])
         dates.append(mydata['date'])
 
-
     # return jsonify(bats=battery,hums=humidity,temps=temperature,airs=airquality,dates=timeStore)
-    # return render_template("index.html",bats=battery,hums=humidity,temps=temperature,airs=airquality,dates=timeStore)
-    return render_template("index.html",hum=humidity,temps=temperature,dates=dates, batts=battery)
+    # return
+    # render_template("index.html",bats=battery,hums=humidity,temps=temperature,airs=airquality,dates=timeStore)
+    return render_template("index.html", hum=humidity, temps=temperature, dates=dates, batts=battery)
 
-def decodeBattery(byte1,byte2):
+
+def decodeBattery(byte1, byte2):
     byte1 = BitArray(uint=byte1, length=8)
     byte2 = BitArray(uint=byte2, length=8)
     batt = byte1[0:1] + byte2[4:]
@@ -122,7 +129,8 @@ def decodeBattery(byte1,byte2):
 
     return newBattery
 
-def decodeTemperature(byte2,byte3):
+
+def decodeTemperature(byte2, byte3):
     byte2 = BitArray(uint=byte2, length=8)
     byte3 = BitArray(uint=byte3, length=8)
     temp = byte2[0:4] + byte3[2:]
@@ -130,9 +138,11 @@ def decodeTemperature(byte2,byte3):
     temperature = (temp.uint - 200) / 8
     return temperature
 
+
 def decodeHumidity(byte4):
     humidity = byte4 * 0.5
     return humidity
+
 
 def decodeMode(byte1):
     byte1 = BitArray(uint=byte1, length=8)
@@ -142,13 +152,14 @@ def decodeMode(byte1):
     print mode
     print timeframe
     print typeAction
-    modeList = [mode.uint,timeframe.uint,typeAction.uint]
+    modeList = [mode.uint, timeframe.uint, typeAction.uint]
     return modeList
 
+
 def correctTimeZone(date):
-    return date + (1*60*60)
+    return date + (1 * 60 * 60)
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     # port = 2000
-    app.run(host= '0.0.0.0', port=port ,debug=True)
+    app.run(host='0.0.0.0', port=port, debug=True)
