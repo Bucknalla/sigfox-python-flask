@@ -89,7 +89,7 @@ def update_webpage():
 @app.route('/', methods=['GET'])
 def load_data():
 
-    mydataset = list(db.data.find().sort("_id",1).limit(10))
+    mydataset = list(db.data.find().sort("_id",-1).limit(10))
 
     temperature = []
     humidity = []
@@ -117,7 +117,7 @@ def decodeBattery(byte1,byte2):
     voltRange = (4.25 - 2.7)
     perRange = (100 - 0)
     newBattery = (((battery - 2.7) * perRange) / voltRange) + 0
-    
+
     return newBattery
 
 def decodeTemperature(byte2,byte3):
