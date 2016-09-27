@@ -50,7 +50,6 @@ def load_user(request):
 def unauthorized_handler():
     return 'Unauthorized', 401
 
-
 @app.route('/data', methods=['POST'])
 @flask_login.login_required
 def update_webpage():
@@ -64,6 +63,8 @@ def update_webpage():
     humPayload = int(content['data']['hum'])
     battPayload = int(content['data']['batt'])
     modePayload = int(content['data']['mode'])
+
+    datePayload = correctTimeZone(datePayload)
 
     datePayload = datetime.datetime.fromtimestamp(datePayload).strftime('%Y-%m-%d %H:%M:%S')
 
@@ -89,7 +90,7 @@ def update_webpage():
 @app.route('/', methods=['GET'])
 def load_data():
 
-    mydataset = list(db.data.find().sort("_id",-1).limit(10))
+    mydataset = list(db.data.find().sort("date",-1).limit(14))
     mydataset.reverse()
 
     temperature = []
@@ -143,6 +144,9 @@ def decodeMode(byte1):
     print typeAction
     modeList = [mode.uint,timeframe.uint,typeAction.uint]
     return modeList
+
+def correctTimeZone(date):
+    return date + (1*60*60)
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
