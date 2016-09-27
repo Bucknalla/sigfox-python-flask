@@ -90,6 +90,7 @@ def update_webpage():
 def load_data():
 
     mydataset = list(db.data.find().sort("_id",-1).limit(10))
+    mydataset.reverse()
 
     temperature = []
     humidity = []
