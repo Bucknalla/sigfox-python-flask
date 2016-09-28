@@ -18,7 +18,6 @@ db = client.bkkui1juebikood
 print 'Connected to Database...'
 data = db.data
 
-
 class User(flask_login.UserMixin):
     # proxy for a database of users
     user_database = {os.getenv("TWITTER_USER"): (
@@ -31,7 +30,6 @@ class User(flask_login.UserMixin):
     @classmethod
     def get(cls, id):
         return cls.user_database.get(id)
-
 
 @login_manager.request_loader
 def load_user(request):
@@ -48,11 +46,9 @@ def load_user(request):
                 return user
     return None
 
-
 @login_manager.unauthorized_handler
 def unauthorized_handler():
     return 'Unauthorized', 401
-
 
 @app.route('/data', methods=['POST'])
 @flask_login.login_required
@@ -85,13 +81,15 @@ def update_webpage():
     print payload
     # content['time'] = datetime.datetime.fromtimestamp(time).strftime('%Y-%m-%d %H:%M:%S')
     try:
-        data_id = data.insert_one(payload).inserted_id
+        if modePayload == 161:
+            return('Button Press', 200)
+        else:
+            data_id = data.insert_one(payload).inserted_id
     except:
         print 'Error loading data into collection'
-        return('', 400)
+        return('Failed', 400)
 
-    return('', 200)
-
+    return('Successful', 200)
 
 @app.route('/', methods=['GET'])
 def load_data():
@@ -116,19 +114,15 @@ def load_data():
     # render_template("index.html",bats=battery,hums=humidity,temps=temperature,airs=airquality,dates=timeStore)
     return render_template("index.html", hum=humidity, temps=temperature, dates=dates, batts=battery)
 
-
 def decodeBattery(byte1, byte2):
     byte1 = BitArray(uint=byte1, length=8)
     byte2 = BitArray(uint=byte2, length=8)
     batt = byte1[0:1] + byte2[4:]
     battery = batt.uint * 0.05 * 2.7
-
     voltRange = (4.25 - 2.7)
     perRange = (100 - 0)
     newBattery = (((battery - 2.7) * perRange) / voltRange) + 0
-
     return newBattery
-
 
 def decodeTemperature(byte2, byte3):
     byte2 = BitArray(uint=byte2, length=8)
@@ -138,11 +132,9 @@ def decodeTemperature(byte2, byte3):
     temperature = (temp.uint - 200) / 8
     return temperature
 
-
 def decodeHumidity(byte4):
     humidity = byte4 * 0.5
     return humidity
-
 
 def decodeMode(byte1):
     byte1 = BitArray(uint=byte1, length=8)
@@ -154,7 +146,6 @@ def decodeMode(byte1):
     print typeAction
     modeList = [mode.uint, timeframe.uint, typeAction.uint]
     return modeList
-
 
 def correctTimeZone(date):
     return date + (1 * 60 * 60)
