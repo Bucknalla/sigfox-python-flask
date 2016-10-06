@@ -1,4 +1,4 @@
-<p align="center"><img src ="http://makers.sigfox.com/img/sigfox-logo-black.svg" width="300"></p>
+<p align="center"><img src ="http://www.sigfox.com/themes/custom/sigfox/images/logo-2016.svg" width="300"></p>
 
 ## SIGFOX Python Flask Callback Tutorial
 
